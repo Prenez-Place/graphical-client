@@ -15,6 +15,7 @@ import log from 'electron-log';
 import Store from 'electron-store';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import { handleDebateRecordNewPart } from "./recordHandlers";
 
 const store = new Store();
 
@@ -33,6 +34,10 @@ ipcMain.on('electron-store-get', async (event, val) => {
 });
 ipcMain.on('electron-store-set', async (_event, key, val) => {
   store.set(key, val);
+});
+
+ipcMain.on('debateRecord:newPart', async (_event, arg) => {
+  handleDebateRecordNewPart(arg);
 });
 
 ipcMain.on('ipc-example', async (event, arg) => {

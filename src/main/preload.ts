@@ -10,6 +10,11 @@ contextBridge.exposeInMainWorld('electron', {
     },
     // Other method you want to add like has(), reset(), etc.
   },
+  recorders: {
+    saveDebateRecordPart: (d: any) => {
+      ipcRenderer.send('debateRecord:newPart', d);
+    },
+  },
   ipcRenderer: {
     myPing() {
       ipcRenderer.send('ipc-example', 'ping');

@@ -1,6 +1,9 @@
 declare global {
   interface Window {
     electron: {
+      recorders: {
+        saveDebateRecordPart: any;
+      };
       ipcRenderer: {
         myPing(): void;
         on(
