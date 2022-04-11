@@ -16,7 +16,7 @@ const Dashboard = () => {
     <div className={styles.hWrapper}>
       <DashLink to="/recording" title="Démarrer un nouveau débat" />
       <DashLink to="/debates" title="Historique des débats" />
-      <DashLink to="/fragments" title="Mots clés & fragments" />
+      <DashLink to="/keywords" title="Mots clés & fragments" />
     </div>
   );
 };
