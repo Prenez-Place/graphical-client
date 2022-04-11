@@ -1,6 +1,7 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import Keywords from './Keywords';
+import Recording from "./Recording";
 
 declare global {
   interface Window {
@@ -18,6 +19,7 @@ export default function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/recording" element={<Recording />} />
         <Route path="/keywords" element={<Keywords />} />
         <Route path="*" element={<Dashboard />} />
       </Routes>
