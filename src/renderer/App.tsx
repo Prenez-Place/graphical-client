@@ -5,7 +5,7 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="*" element={<Dashboard />} />
       </Routes>
     </Router>
   );
