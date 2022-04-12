@@ -55,10 +55,10 @@ const Recording = () => {
     // access a media stream
     stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
     // start recording of the entire debate
-    debateRecorder = createDebateRecorder(stream);
+    debateRecorder = createDebateRecorder(stream, location);
     debateRecorder.start(debateRecorderTimeslice);
     // start another recording for fragments
-    fragmentRecorder = createFragmentRecorder(stream);
+    fragmentRecorder = createFragmentRecorder(stream, location);
     fragmentRecorder.start(fragmentRecorderTimeslice);
   };
 

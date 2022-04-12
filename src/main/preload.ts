@@ -14,15 +14,13 @@ contextBridge.exposeInMainWorld('electron', {
     initNewDebateRecord: (id: string) => {
       ipcRenderer.send('debateRecord:init', id);
     },
-    saveDebateRecordPart: (d: any) => {
-      ipcRenderer.send('debateRecord:newPart', d);
-    },
+    saveDebateRecordPart: (d: any) =>
+      ipcRenderer.invoke('debateRecord:newPart', d),
     initNewFragmentRecord: (id: string) => {
       ipcRenderer.send('fragmentRecord:init', id);
     },
-    saveFragmentRecordPart: (d: any) => {
-      ipcRenderer.send('fragmentRecord:newPart', d);
-    },
+    saveFragmentRecordPart: (d: any) =>
+      ipcRenderer.invoke('fragmentRecord:newPart', d),
   },
   ipcRenderer: {
     myPing() {

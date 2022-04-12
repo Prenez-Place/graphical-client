@@ -15,7 +15,7 @@ const blobToBuffer = (blob: Blob) => {
 
 export const debateRecorderTimeslice = 60 * 1000;
 
-export const createDebateRecorder = (stream: MediaStream) => {
+export const createDebateRecorder = (stream: MediaStream, location: string) => {
   const recorder = new MediaRecorder(stream);
   const id = new Date().getTime().toString();
   recorder.id = id;
@@ -24,14 +24,22 @@ export const createDebateRecorder = (stream: MediaStream) => {
     const blob = new Blob([e.data], { type: e.data.type });
     const buffer = await blobToBuffer(blob);
     const isLast = recorder.state === "inactive";
-    window.electron.recorders.saveDebateRecordPart([recorder.id, buffer, isLast]);
+    let [recordingPath, recordingHash] = await window.electron.recorders.saveDebateRecordPart([recorder.id, buffer, isLast]);
+    if (isLast) {
+      window.electron.store.set(`debates.${id}`, {
+        location,
+        time: recorder.id,
+        recording: recordingPath,
+        recordingHash: recordingHash,
+      });
+    }
   };
   return recorder;
 };
 
 export const fragmentRecorderTimeslice = 4 * 1000;
 
-export const createFragmentRecorder = (stream: MediaStream) => {
+export const createFragmentRecorder = (stream: MediaStream, location: string) => {
   const recorder = new MediaRecorder(stream);
   const id = new Date().getTime().toString();
   recorder.id = id;
@@ -40,7 +48,17 @@ export const createFragmentRecorder = (stream: MediaStream) => {
     const blob = new Blob([e.data], { type: e.data.type });
     const buffer = await blobToBuffer(blob);
     const isLast = recorder.state === "inactive";
-    window.electron.recorders.saveFragmentRecordPart([recorder.id, buffer, isLast, recorder.currentKeyword]);
+    let recordingPath = await
+      window.electron.recorders.saveFragmentRecordPart([recorder.id, buffer, isLast, recorder.currentKeyword]);
+    const updatedId = new Date().getTime().toString();
+    if (isLast) {
+      window.electron.store.set(`fragments.${id}`, {
+        location,
+        time: updatedId,
+        recording: recordingPath,
+        keyword: recorder.currentKeyword,
+      });
+    }
   };
   return recorder;
 };

@@ -45,16 +45,8 @@ ipcMain.on('debateRecord:init', async (_event, id) => {
   handleDebateRecordInit(id);
 });
 
-ipcMain.on('debateRecord:newPart', async (_event, arg) => {
-  handleDebateRecordNewPart(arg);
-});
-
 ipcMain.on('fragmentRecord:init', async (_event, id) => {
   handleFragmentRecordInit(id);
-});
-
-ipcMain.on('fragmentRecord:newPart', async (_event, arg) => {
-  handleFragmentRecordNewPart(arg);
 });
 
 ipcMain.on('ipc-example', async (event, arg) => {
@@ -159,6 +151,8 @@ app.on('window-all-closed', () => {
 app
   .whenReady()
   .then(() => {
+    ipcMain.handle('debateRecord:newPart', handleDebateRecordNewPart);
+    ipcMain.handle('fragmentRecord:newPart', handleFragmentRecordNewPart);
     createWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
