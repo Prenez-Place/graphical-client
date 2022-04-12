@@ -9,7 +9,6 @@ const Header = () => {
         Home
       </Link>
       {pathname !== '/' && (
-        // likely unsecure
         <Link to={'..'}>
           🔙
         </Link>
