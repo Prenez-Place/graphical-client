@@ -81,12 +81,29 @@ const Recording = () => {
     navigate("/");
   };
 
+  const LocationInputForm = () => {
+    const [v, setV] = useState("");
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      setLocation(v)
+    }
+    return (
+      <div>
+        <form onSubmit={handleSubmit}>
+          <label>
+            Lieu du débat
+            <input placeholder={'Gif-sur-Yvette'} type="text" value={v} onChange={e => {
+              setV(e.target.value);
+            }} />
+          </label>
+          <input type="submit" value="Submit" disabled={v.length < 1} />
+        </form>
+      </div>
+    );
+  };
+
   return location.length < 1 ? (
-    <button onClick={() => {
-      setLocation(new Date().getTime().toString());
-    }}>
-      Localisation du débat (exemple: Gif-sur-Yvette)
-    </button>
+    <LocationInputForm/>
   ) : (
     <>
       <p>{`📍 ${location}`}</p>
