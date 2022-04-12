@@ -72,8 +72,11 @@ const Recording = () => {
   };
 
   const onStopDebate = () => {
-    // Terminate the recording
+    // Terminate the debate recording
     debateRecorder?.stop();
+    // Terminate the fragment recording
+    fragmentRecorder.dropped = true;
+    fragmentRecorder?.stop();
     // Go to /
     navigate("/");
   };

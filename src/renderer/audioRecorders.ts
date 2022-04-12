@@ -45,6 +45,12 @@ export const createFragmentRecorder = (stream: MediaStream, location: string) =>
   recorder.id = id;
   window.electron.recorders.initNewFragmentRecord(id);
   recorder.ondataavailable = async (e) => {
+    // in case the debate has been ended and the recorder dropped, just ask to clear pending data
+    if (recorder.dropped) {
+      window.electron.recorders.dropFragmentRecordParts(recorder.id);
+      return;
+    }
+    // otherwise, process the data
     const blob = new Blob([e.data], { type: e.data.type });
     const buffer = await blobToBuffer(blob);
     const isLast = recorder.state === "inactive";

@@ -17,7 +17,7 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import {
   handleDebateRecordInit,
-  handleDebateRecordNewPart,
+  handleDebateRecordNewPart, handleFragmentRecordDrop,
   handleFragmentRecordInit,
   handleFragmentRecordNewPart
 } from "./recordHandlers";
@@ -47,6 +47,10 @@ ipcMain.on('debateRecord:init', async (_event, id) => {
 
 ipcMain.on('fragmentRecord:init', async (_event, id) => {
   handleFragmentRecordInit(id);
+});
+
+ipcMain.on('fragmentRecord:drop', async (_event, id) => {
+  handleFragmentRecordDrop(id);
 });
 
 ipcMain.on('ipc-example', async (event, arg) => {

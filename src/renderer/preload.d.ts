@@ -6,6 +6,7 @@ declare global {
         saveDebateRecordPart: any;
         initNewFragmentRecord: any;
         saveFragmentRecordPart: any;
+        dropFragmentRecordParts: any;
       };
       ipcRenderer: {
         myPing(): void;

@@ -21,6 +21,9 @@ contextBridge.exposeInMainWorld('electron', {
     },
     saveFragmentRecordPart: (d: any) =>
       ipcRenderer.invoke('fragmentRecord:newPart', d),
+    dropFragmentRecordParts: (id: string) => {
+      ipcRenderer.send('fragmentRecord:drop', id);
+    },
   },
   ipcRenderer: {
     myPing() {

@@ -82,6 +82,12 @@ export const handleFragmentRecordInit = (id: string) => {
   }
 };
 
+export const handleFragmentRecordDrop = (recorderId: string) => {
+  // clear temp parts directory
+  const cwd = path.join(fragmentsTmpDir, recorderId);
+  fs.rmSync(cwd, { recursive: true });
+};
+
 export const handleFragmentRecordNewPart = async (_event, [recorderId, buffer, isLast, currentKeyword]) => {
   const cwd = path.join(fragmentsTmpDir, recorderId);
   // write new part to disk
