@@ -4,6 +4,8 @@ import Keywords from './Keywords';
 import Recording from "./Recording";
 import Debates from "./Debates";
 import Debate from "./Debate";
+import Header from "./Header";
+import Footer from "./Footer";
 
 declare global {
   interface Window {
@@ -20,6 +22,7 @@ declare global {
 export default function App() {
   return (
     <Router>
+      <Header/>
       <Routes>
         <Route path="/recording" element={<Recording />} />
         <Route path="/debates" element={<Debates />} />
@@ -27,6 +30,7 @@ export default function App() {
         <Route path="/keywords" element={<Keywords />} />
         <Route path="*" element={<Dashboard />} />
       </Routes>
+      <Footer/>
     </Router>
   );
 }
