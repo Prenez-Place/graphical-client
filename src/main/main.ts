@@ -9,7 +9,7 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, protocol } from "electron";
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import Store from 'electron-store';
@@ -21,6 +21,7 @@ import {
   handleFragmentRecordInit,
   handleFragmentRecordNewPart
 } from "./recordHandlers";
+import atomProtocolHandler from "./atomProtocolHandler";
 
 const store = new Store();
 
@@ -157,6 +158,7 @@ app
   .then(() => {
     ipcMain.handle('debateRecord:newPart', handleDebateRecordNewPart);
     ipcMain.handle('fragmentRecord:newPart', handleFragmentRecordNewPart);
+    protocol.registerFileProtocol('atom', atomProtocolHandler);
     createWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the

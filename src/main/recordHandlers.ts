@@ -18,8 +18,8 @@ const fragmentsTmpDir = path.join(app.getPath("userData"), "tmp-fragments");
 const concatPartsFilename = "parts";
 const outputFilename = "output.mp3";
 
-const debatesDir = path.join(app.getPath("userData"), "debates");
-const fragmentsDir = path.join(app.getPath("userData"), "fragments");
+export const debatesDir = path.join(app.getPath("userData"), "debates");
+export const fragmentsDir = path.join(app.getPath("userData"), "fragments");
 
 export const handleDebateRecordInit = (id: string) => {
   // create a new directory for the debate parts
