@@ -7,7 +7,6 @@ const KeywordCard = ({ keyword, onRemove }: { keyword: string, onRemove: () => v
       <h3>{keyword}</h3>
       <span>link to fragments</span>
       <button onClick={onRemove}>remove</button>
-      {/* move to dedicated page */}
     </div>
   );
 };
