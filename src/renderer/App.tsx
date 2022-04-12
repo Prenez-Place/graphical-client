@@ -6,6 +6,7 @@ import Debates from "./Debates";
 import Debate from "./Debate";
 import Header from "./Header";
 import Footer from "./Footer";
+import Settings from "./Settings";
 
 declare global {
   interface Window {
@@ -24,6 +25,7 @@ export default function App() {
     <Router>
       <Header/>
       <Routes>
+        <Route path="/settings" element={<Settings />} />
         <Route path="/recording" element={<Recording />} />
         <Route path="/debates" element={<Debates />} />
         <Route path="/debates/:id" element={<Debate />} />
