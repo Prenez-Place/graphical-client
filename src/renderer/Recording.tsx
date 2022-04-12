@@ -67,7 +67,7 @@ const Recording = () => {
     fragmentRecorder.currentKeyword = kw;
     fragmentRecorder?.stop();
     // start a new recording for the next fragment
-    fragmentRecorder = createFragmentRecorder(stream!);
+    fragmentRecorder = createFragmentRecorder(stream!, location);
     fragmentRecorder.start(fragmentRecorderTimeslice);
   };
 
