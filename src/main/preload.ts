@@ -11,8 +11,17 @@ contextBridge.exposeInMainWorld('electron', {
     // Other method you want to add like has(), reset(), etc.
   },
   recorders: {
+    initNewDebateRecord: (id: string) => {
+      ipcRenderer.send('debateRecord:init', id);
+    },
     saveDebateRecordPart: (d: any) => {
       ipcRenderer.send('debateRecord:newPart', d);
+    },
+    initNewFragmentRecord: (id: string) => {
+      ipcRenderer.send('fragmentRecord:init', id);
+    },
+    saveFragmentRecordPart: (d: any) => {
+      ipcRenderer.send('fragmentRecord:newPart', d);
     },
   },
   ipcRenderer: {

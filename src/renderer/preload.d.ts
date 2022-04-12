@@ -2,7 +2,10 @@ declare global {
   interface Window {
     electron: {
       recorders: {
+        initNewDebateRecord: any;
         saveDebateRecordPart: any;
+        initNewFragmentRecord: any;
+        saveFragmentRecordPart: any;
       };
       ipcRenderer: {
         myPing(): void;
