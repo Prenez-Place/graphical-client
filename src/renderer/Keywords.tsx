@@ -1,10 +1,9 @@
 import styles from "./Keywords.module.scss";
 import { useState } from "react";
-import { functions } from "electron-log";
 
-const KeywordCard = ({ keyword, onRemove }: { keyword: string }) => {
+const KeywordCard = ({ keyword, onRemove }: { keyword: string, onRemove: () => void }) => {
   return (
-    <div className={styles.keywordCard}>
+    <div>
       <h3>{keyword}</h3>
       <span>link to fragments</span>
       <button onClick={onRemove}>remove</button>
@@ -14,10 +13,28 @@ const KeywordCard = ({ keyword, onRemove }: { keyword: string }) => {
 };
 
 const KeywordCreationCard = ({ onAdd }) => {
+  const [keyword, setKeyword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (keyword.length > 0) {
+      onAdd(keyword);
+      setKeyword("");
+    }
+  }
+
   return (
-    <button className={styles.fragmentCard} onClick={onAdd}>
-      <h3>Add ➕</h3>
-    </button>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Name:
+          <input type="text" value={keyword} onChange={e => {
+            setKeyword(e.target.value);
+          }} />
+        </label>
+        <input type="submit" value="Submit" disabled={keyword.length < 1} />
+      </form>
+    </div>
   );
 };
 
@@ -26,7 +43,8 @@ const Keywords = () => {
   const [keywords, setKeywords] = useState(initialKeywords);
 
   const addKeyword = (keyword: string) => {
-    // TODO do not forget to normalize the new keyword
+    // normalize the keyword
+    keyword = keyword.toLowerCase().trim();
     // add to list if not already present
     if (!keywords.includes(keyword)) {
       const newKeywords = [...keywords, keyword];
@@ -50,9 +68,7 @@ const Keywords = () => {
         }} />;
       })
       }
-      <KeywordCreationCard onAdd={() => {
-        addKeyword(new Date().getTime().toString());
-      }} />
+      <KeywordCreationCard onAdd={addKeyword} />
     </div>
   );
 };
