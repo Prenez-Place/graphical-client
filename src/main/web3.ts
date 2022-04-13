@@ -3,16 +3,12 @@ import fs from "fs";
 import Store from "electron-store";
 import { getAssetPath } from "./main";
 import path from "path";
-
-
 import { NFTStorage, File } from "nft.storage";
 import mime from "mime";
 
-
-const NFT_STORAGE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEU1NWMzYjk2QzJFQTI4M0E0Njg3RmNhZmVFNUUxRDhBZDc0N2NiMjIiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY0OTQyMDkwNjIyMiwibmFtZSI6IlByZW5leiBQbGFjZSAwMCJ9.OCrmETFhPLfI2HDeuOrIvLNdy6X7v5K2nTxwNFoKZaI";
-
-
 const store = new Store();
+
+const NFT_STORAGE_KEY = store.get('settings.ipfsApiToken') || "";
 
 enum TxType {
   NewDebate = "NewDebate",
