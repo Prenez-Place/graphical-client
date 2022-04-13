@@ -3,12 +3,36 @@ import fs from "fs";
 import Store from "electron-store";
 import { getAssetPath } from "./main";
 import path from "path";
+const Web3 = require('web3');
 import { NFTStorage, File } from "nft.storage";
 import mime from "mime";
 
 const store = new Store();
 
 const NFT_STORAGE_KEY = store.get('settings.ipfsApiToken') || "";
+const ETH_PRIVATE_KEY = store.get('settings.ethPrivateKey') || "";
+const DEBATES_ERC721_ADDRESS = store.get('settings.debatesNftAddress') || "";
+
+const ERC721_ABI = [
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "_tokenUri",
+        "type": "string"
+      }
+    ],
+    "name": "mintTo",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+];
 
 enum TxType {
   NewDebate = "NewDebate",
@@ -53,25 +77,18 @@ export namespace EthTxProcessor {
       switch (tx.type) {
         case TxType.NewDebate:
           let debate = store.get(`debates.${tx.id}`);
-
-
-          /////
-
-
-          // load the file from disk
+          // load files
           const image = await fileFromPath(getAssetPath("tmp-nft-image.jpeg"));
           const animation = await fileFromPath(debate.recording);
-
-          // create a new NFTStorage client using our API key
+          // create a new NFTStorage with the API key
           const nftstorage = new NFTStorage({ token: NFT_STORAGE_KEY });
-
-          // call client.store, passing in the image & metadata
+          // push data to IPFS
           const formattedDate = new Date(debate.time).toISOString().split("T")[0];
           const { ipnft, url } = await nftstorage.store({
-            name: `${debate.location} • ${formattedDate} • Prenez Place !`,
-            description: `${debate.location} • ${formattedDate} • Prenez Place !`,
+            name: `Prenez Place ! • ${debate.location} • ${formattedDate}`,
+            description: `Prenez Place ! • ${debate.location} • ${formattedDate}`,
             image,
-            animation,
+            animation_url: animation,
             attributes:
               [
                 {
@@ -85,8 +102,21 @@ export namespace EthTxProcessor {
                 }
               ]
           });
-          // TODO mint the NFT
-
+          const tokenUri = `ipfs://${ipnft}/metadata.json`
+          // Mint the NFT
+          const web3 = new Web3("https://polygon-rpc.com")
+          const debatesContract = new web3.eth.Contract(ERC721_ABI, DEBATES_ERC721_ADDRESS);
+          web3.eth.accounts.wallet.add(ETH_PRIVATE_KEY);
+          const senderAddress = web3.eth.accounts.wallet[0].address;
+          // send transaction using the private key
+          const unsignedTx = debatesContract.methods.mintTo(senderAddress, tokenUri);
+          const gas = await unsignedTx.estimateGas({from: senderAddress});
+          const gasPrice = await web3.eth.getGasPrice();
+          await unsignedTx.send({
+            from: senderAddress,
+            gas,
+            gasPrice,
+          });
           break;
         default:
           console.log("Unknown tx type:", tx.type);
