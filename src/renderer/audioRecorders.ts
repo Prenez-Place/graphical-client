@@ -26,12 +26,14 @@ export const createDebateRecorder = (stream: MediaStream, location: string) => {
     const isLast = recorder.state === "inactive";
     let [recordingPath, recordingHash] = await window.electron.recorders.saveDebateRecordPart([recorder.id, buffer, isLast]);
     if (isLast) {
-      window.electron.store.set(`debates.${id}`, {
+      const debate = {
         location,
-        time: recorder.id,
+        time: parseInt(recorder.id),
         recording: recordingPath,
         recordingHash: recordingHash,
-      });
+      };
+      window.electron.store.set(`debates.${id}`, debate);
+      window.electron.web3.newDebate(id);
     }
   };
   return recorder;
@@ -56,11 +58,11 @@ export const createFragmentRecorder = (stream: MediaStream, location: string) =>
     const isLast = recorder.state === "inactive";
     let recordingPath = await
       window.electron.recorders.saveFragmentRecordPart([recorder.id, buffer, isLast, recorder.currentKeyword]);
-    const updatedId = new Date().getTime().toString();
+    const time = new Date().getTime();
     if (isLast) {
       window.electron.store.set(`fragments.${id}`, {
         location,
-        time: updatedId,
+        time,
         recording: recordingPath,
         keyword: recorder.currentKeyword,
       });

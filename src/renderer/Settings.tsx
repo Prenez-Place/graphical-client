@@ -6,7 +6,7 @@ const Settings = () => {
 
   const [rpcPath, setRpcPath] = useState(initialSettings.rpcPath || "");
   const [ethPrivateKey, setEthPrivateKey] = useState(initialSettings.ethPrivateKey || "");
-  const [ipfsApiUrl, setIpfsApiUrl] = useState(initialSettings.ipfsApiUrl || "");
+  const [ipfsApiToken, setIpfsApiToken] = useState(initialSettings.ipfsApiToken || "");
   const [debatesNftAddress, setDebatesNftAddress] = useState(initialSettings.debatesNftAddress || "");
   const [fragmentsNftAddress, setFragmentsNftAddress] = useState(initialSettings.fragmentsNftAddress || "");
 
@@ -15,7 +15,7 @@ const Settings = () => {
     window.electron.store.set("settings", {
       rpcPath,
       ethPrivateKey,
-      ipfsApiUrl,
+      ipfsApiToken,
       debatesNftAddress,
       fragmentsNftAddress
     });
@@ -39,9 +39,9 @@ const Settings = () => {
           }} />
         </label>
         <label>
-          ipfsApiUrl:
-          <input type="text" placeholder={"todo"} value={ipfsApiUrl} onChange={e => {
-            setIpfsApiUrl(e.target.value);
+          ipfsApiToken:
+          <input type="password" value={ipfsApiToken} onChange={e => {
+            setIpfsApiToken(e.target.value);
           }} />
         </label>
         <label>

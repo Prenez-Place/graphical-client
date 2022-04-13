@@ -1,6 +1,9 @@
 declare global {
   interface Window {
     electron: {
+      web3: {
+        newDebate: any;
+      }
       recorders: {
         initNewDebateRecord: any;
         saveDebateRecordPart: any;

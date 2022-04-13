@@ -17,7 +17,9 @@
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "concat-files": "^0.1.1",
     "crypto": "^1.0.1",
-    "fluent-ffmpeg": "^2.1.2"
+    "fluent-ffmpeg": "^2.1.2",
+    "mime": "^3.0.0",
+    "nft.storage": "^6.2.0"
   },
   "license": "MIT"
 }

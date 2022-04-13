@@ -10,6 +10,10 @@ contextBridge.exposeInMainWorld('electron', {
     },
     // Other method you want to add like has(), reset(), etc.
   },
+  web3: {
+    newDebate: (id: string) =>
+      ipcRenderer.invoke('web3:newDebate', id),
+  },
   recorders: {
     initNewDebateRecord: (id: string) => {
       ipcRenderer.send('debateRecord:init', id);
