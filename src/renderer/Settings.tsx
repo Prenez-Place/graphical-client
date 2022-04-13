@@ -33,7 +33,7 @@ const Settings = () => {
           }} />
         </label>
         <label>
-          ⚠⚠ ethPrivateKey (as given by MM) ⚠⚠:
+          ⚠⚠ ethPrivateKey (as given by MM) (should be the NFT collections' owner) ⚠⚠:
           <input type="password" value={ethPrivateKey} onChange={e => {
             setEthPrivateKey(e.target.value);
           }} />
