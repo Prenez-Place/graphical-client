@@ -1,5 +1,3 @@
-import { File } from "web3.storage";
-import { storeFiles } from "./ipfs";
 import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
 import fs from "fs";
 import Store from "electron-store";
