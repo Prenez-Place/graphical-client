@@ -1,11 +1,13 @@
-import { Link, To } from 'react-router-dom';
-import styles from './Dashboard.module.scss';
+import { Link, To } from "react-router-dom";
+import styles from "./Dashboard.module.scss";
 
 const DashLink = ({ to, title }: { to: To; title: string }) => {
   return (
-    <div className={styles.dashLink}>
+    <div className={styles.hWrapper}>
       <Link to={to}>
-        <h2>{title}</h2>
+        <div className={styles.link}>
+          <p>{title}</p>
+        </div>
       </Link>
     </div>
   );

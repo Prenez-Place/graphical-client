@@ -1,7 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+Pro&display=swap');
-//font-family: 'Bebas Neue', cursive;
-//font-family: 'Source Sans Pro', sans-serif;
-
 
 body,
 html {
@@ -14,4 +11,9 @@ html,
 body,
 #root {
   height: 100%;
+}
+
+a {
+  color: black;
+  text-decoration: none;
 }

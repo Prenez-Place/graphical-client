@@ -1,3 +1,20 @@
-.h-wrapper {
+.hWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
 
+  .link {
+    width: 18vw;
+    height: 50%;
+    border: solid black 12px;
+    border-radius: 24px;
+
+    p {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 36px;
+      text-align: center;
+    }
+  }
 }
