@@ -34,7 +34,7 @@ const Settings = () => {
         </label>
         <label>
           {/* (as given by MM) (should be the NFT collections' owner) */}
-          ⚠⚠ ethPrivateKey ⚠⚠
+          ⚠ ethPrivateKey ⚠
           <input type="password" value={ethPrivateKey} onChange={e => {
             setEthPrivateKey(e.target.value);
           }} />
@@ -57,7 +57,7 @@ const Settings = () => {
             setFragmentsNftAddress(e.target.value);
           }} />
         </label>
-        <input type="submit" value="Submit" disabled={false} className={styles.submitButton}/>
+        <input type="submit" value="Sauvegarder" disabled={false} className={styles.submitButton}/>
       </form>
     </div>
   );
