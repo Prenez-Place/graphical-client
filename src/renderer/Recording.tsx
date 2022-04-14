@@ -35,14 +35,14 @@ const KeywordLaunchPad = ({ oneNewRequest }: { oneNewRequest: (kw: string) => vo
   const keywords = window.electron.store.get("keywords") || [];
 
   return (
-    <>
+    <div className={styles.launchPad}>
       {keywords.map((kw: string) => {
         return <KeywordLauncher keyword={kw} key={kw} onLaunch={() => {
           oneNewRequest(kw);
         }} />;
       })
       }
-    </>
+    </div>
   );
 };
 

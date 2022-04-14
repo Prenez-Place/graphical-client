@@ -3,8 +3,18 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  gap: 24px;
 
   padding: 24px;
+
+  .launchPad {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
 
   .kwCard,
   .locationForm label {
@@ -20,10 +30,6 @@
 
     padding: 0 24px;
     font-size: 20px;
-
-    &:not(:last-child) {
-      margin-bottom: 24px;
-    }
 
     .actionIcon {
       width: 32px;
@@ -49,12 +55,8 @@
     font-size: 16px;
   }
 
-  .stopDebateButton {
-    margin-bottom: 48px;
-  }
-
-  .stopDebateCancelButton {
-    margin-bottom: 24px;
+  .submitButton {
+    margin-top: 24px;
   }
 
 }

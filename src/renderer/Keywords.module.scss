@@ -3,34 +3,40 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  gap: 24px;
 
   padding: 24px;
 
-  .kwCard,
-  .newKwCard {
+  .grid {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 24px;
 
-    min-width: 384px;
-    height: 64px;
-    border: solid black 4px;
-    border-radius: 8px;
+    .kwCard,
+    .newKwCard {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
 
-    padding: 0 24px;
-    font-size: 20px;
+      min-width: 384px;
+      height: 64px;
+      border: solid black 4px;
+      border-radius: 8px;
 
-    &:not(:last-child) {
-      margin-bottom: 24px;
-    }
+      padding: 0 24px;
+      font-size: 20px;
 
-    .actionIcon {
-      width: 32px;
-      height: 32px;
+      .actionIcon {
+        width: 32px;
+        height: 32px;
 
-      img {
-        cursor: pointer;
+        img {
+          cursor: pointer;
+        }
       }
     }
 

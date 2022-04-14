@@ -28,11 +28,11 @@ const KeywordCreationCard = ({ onAdd }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className={styles.newKwCard}>
-        <input type="text" value={keyword} placeholder={'Nouveau mot clé'} onChange={e => {
+        <input type="text" value={keyword} placeholder={"Nouveau mot clé"} onChange={e => {
           setKeyword(e.target.value);
         }} />
         <div className={styles.actionIcon}>
-          <img src={addIcon} alt="add" onClick={handleSubmit}/>
+          <img src={addIcon} alt="add" onClick={handleSubmit} />
         </div>
       </div>
     </form>
@@ -66,13 +66,15 @@ const Keywords = () => {
       <h1 className={styles.title}>
         Mots clés
       </h1>
-      {keywords.map((kw: string) => {
-        return <KeywordCard keyword={kw} key={kw} onRemove={() => {
-          removeKeyword(kw);
-        }} />;
-      })
-      }
-      <KeywordCreationCard onAdd={addKeyword} />
+      <div className={styles.grid}>
+        <KeywordCreationCard onAdd={addKeyword} />
+        {keywords.map((kw: string) => {
+          return <KeywordCard keyword={kw} key={kw} onRemove={() => {
+            removeKeyword(kw);
+          }} />;
+        })
+        }
+      </div>
     </div>
   );
 };
