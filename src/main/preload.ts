@@ -13,6 +13,8 @@ contextBridge.exposeInMainWorld('electron', {
   web3: {
     newDebate: (id: string) =>
       ipcRenderer.invoke('web3:newDebate', id),
+    newFragment: (id: string) =>
+      ipcRenderer.invoke('web3:newFragment', id),
   },
   recorders: {
     initNewDebateRecord: (id: string) => {

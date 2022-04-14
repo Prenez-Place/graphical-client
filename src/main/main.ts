@@ -22,7 +22,7 @@ import {
   handleFragmentRecordNewPart
 } from "./recordHandlers";
 import atomProtocolHandler from "./atomProtocolHandler";
-import { handleNewDebate } from "./web3";
+import { handleNewDebate, handleNewFragment } from "./web3";
 
 const store = new Store();
 
@@ -158,6 +158,7 @@ app
   .whenReady()
   .then(() => {
     ipcMain.handle('web3:newDebate', handleNewDebate);
+    ipcMain.handle('web3:newFragment', handleNewFragment);
     ipcMain.handle('debateRecord:newPart', handleDebateRecordNewPart);
     ipcMain.handle('fragmentRecord:newPart', handleFragmentRecordNewPart);
     protocol.registerFileProtocol('atom', atomProtocolHandler);

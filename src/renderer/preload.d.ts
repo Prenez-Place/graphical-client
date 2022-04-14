@@ -3,6 +3,7 @@ declare global {
     electron: {
       web3: {
         newDebate: any;
+        newFragment: any;
       }
       recorders: {
         initNewDebateRecord: any;
