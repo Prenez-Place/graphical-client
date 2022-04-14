@@ -8,6 +8,7 @@ import {
 } from "./audioRecorders";
 import styles from "./Recording.module.scss";
 import { playAudioMix } from "./audioMix";
+import recordIcon from "../../assets/voice-recording.svg";
 
 let stream: MediaStream | null = null;
 let debateRecorder: MediaRecorder | null = null;
@@ -21,9 +22,11 @@ enum RecordingStage {
 
 const KeywordLauncher = ({ keyword, onLaunch }: { keyword: string, onLaunch: () => void }) => {
   return (
-    <div>
+    <div className={styles.kwCard}>
       <h3>{keyword}</h3>
-      <button onClick={onLaunch}>Enregistrer</button>
+      <div className={styles.actionIcon}>
+        <img src={recordIcon} alt="record" onClick={onLaunch} />
+      </div>
     </div>
   );
 };
@@ -32,15 +35,14 @@ const KeywordLaunchPad = ({ oneNewRequest }: { oneNewRequest: (kw: string) => vo
   const keywords = window.electron.store.get("keywords") || [];
 
   return (
-    <div>
-      <p>Indications sur l'utilisation du launchpad</p>
+    <>
       {keywords.map((kw: string) => {
         return <KeywordLauncher keyword={kw} key={kw} onLaunch={() => {
           oneNewRequest(kw);
         }} />;
       })
       }
-    </div>
+    </>
   );
 };
 
@@ -88,52 +90,56 @@ const Recording = () => {
     const [v, setV] = useState("");
     const handleSubmit = (e) => {
       e.preventDefault();
-      setLocation(v)
-    }
+      setLocation(v);
+    };
     return (
-      <div>
-        <form onSubmit={handleSubmit}>
-          <label>
-            Lieu du débat
-            <input placeholder={'Gif-sur-Yvette'} type="text" value={v} onChange={e => {
-              setV(e.target.value);
-            }} />
-          </label>
-          <input type="submit" value="Submit" disabled={v.length < 1} />
-        </form>
-      </div>
+      <form onSubmit={handleSubmit} className={styles.locationForm}>
+        <label>
+          Lieu du débat
+          <input placeholder={"Gif-sur-Yvette"} type="text" value={v} onChange={e => {
+            setV(e.target.value);
+          }} />
+        </label>
+        <input type="submit" value="Suivant" disabled={v.length < 1} className={styles.submitButton}/>
+      </form>
     );
   };
 
-  return location.length < 1 ? (
-    <LocationInputForm/>
-  ) : (
-    <>
-      <p>{`📍 ${location}`}</p>
-      <>
-        {stage === RecordingStage.NotRecording ? (
-          <button onClick={onStartDebate}>
-            Démarrer le débat
-          </button>
-        ) : stage === RecordingStage.Recording ? (
-          <div>
-            <KeywordLaunchPad oneNewRequest={onNewFragmentRequest}/>
-            <button onClick={() => setStage(RecordingStage.RecordingFinished)}>
-              Terminer le débat
-            </button>
-          </div>
+  return (
+    <div className={styles.vWrapper}>
+      <h1>{`Nouveau débat${location.length < 1 ? '' : ` • ${location}`}`}</h1>
+      {
+        location.length < 1 ? (
+          <LocationInputForm />
         ) : (
-          <div>
-            <button onClick={onStopDebate}>
-              Valider
-            </button>
-            <button onClick={() => setStage(RecordingStage.Recording)}>
-              cancel
-            </button>
-          </div>
-        )}
-      </>
-    </>
+          <>
+            <>
+              {stage === RecordingStage.NotRecording ? (
+                <button onClick={onStartDebate} className={styles.startDebateButton}>
+                  Démarrer le débat
+                </button>
+              ) : stage === RecordingStage.Recording ? (
+                <>
+                  <button onClick={() => setStage(RecordingStage.RecordingFinished)} className={styles.stopDebateButton}>
+                    Terminer le débat
+                  </button>
+                  <KeywordLaunchPad oneNewRequest={onNewFragmentRequest} />
+                </>
+              ) : (
+                <>
+                  <button onClick={() => setStage(RecordingStage.Recording)} className={styles.stopDebateCancelButton}>
+                    Reprendre le débat
+                  </button>
+                  <button onClick={onStopDebate} className={styles.stopDebateConfirmButton}>
+                    Terminer le débat
+                  </button>
+                </>
+              )}
+            </>
+          </>
+        )
+      }
+    </div>
   );
 };
 
