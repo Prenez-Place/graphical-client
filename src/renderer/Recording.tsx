@@ -7,6 +7,7 @@ import {
   createFragmentRecorder
 } from "./audioRecorders";
 import styles from "./Recording.module.scss";
+import { playAudioMix } from "./audioMix";
 
 let stream: MediaStream | null = null;
 let debateRecorder: MediaRecorder | null = null;
@@ -69,6 +70,8 @@ const Recording = () => {
     // start a new recording for the next fragment
     fragmentRecorder = createFragmentRecorder(stream!, location);
     fragmentRecorder.start(fragmentRecorderTimeslice);
+    // play an audio mix of previous occurrences of the keyword
+    playAudioMix(kw);
   };
 
   const onStopDebate = () => {
