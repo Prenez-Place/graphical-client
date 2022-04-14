@@ -1,11 +1,12 @@
-import styles from './Header.module.scss';
+import styles from "./Header.module.scss";
 import { Link } from "react-router-dom";
+import logo from "../../assets/prenez-place-logo-128.png";
 
 const Header = () => {
   return (
-    <div>
-      <Link to={'/'}>
-        Home
+    <div className={styles.wrapper}>
+      <Link to={"/"}>
+        <img src={logo} alt="logo" className={styles.logo} />
       </Link>
     </div>
   );

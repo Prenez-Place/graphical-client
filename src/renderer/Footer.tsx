@@ -1,23 +1,26 @@
 import styles from "./Footer.module.scss";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import settingsLogo from "../../assets/settings.svg";
+import airplaneModeOnLogo from "../../assets/airplane-mode-on.svg";
+import airplaneModeOffLogo from "../../assets/airplane-mode-off.svg";
 
 const Footer = () => {
   const [airPlaineMode, setAirPlaineMode] = useState(false);
   return (
-    <div>
-      <div>
-        <label>
-          <input
-            type="checkbox"
-            checked={airPlaineMode}
-            onChange={() => setAirPlaineMode(!airPlaineMode)}
-          />
-          AirPlaine Mode
-        </label>
+    <div className={styles.wrapper}>
+      <div className={styles.airplaneMode} onClick={() => setAirPlaineMode(!airPlaineMode)}>
+        {airPlaineMode ? (
+          <img src={airplaneModeOnLogo} alt="airplaine mode on" />
+        ) : (
+          <img src={airplaneModeOffLogo} alt="airplaine mode off" />
+        )}
       </div>
-      <div>
-        <Link to={'/settings'}>Settings</Link>
+
+      <div className={styles.settingsLogo}>
+        <Link to={"settings"}>
+          <img src={settingsLogo} alt="settings" />
+        </Link>
       </div>
     </div>
   );
