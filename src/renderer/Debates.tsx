@@ -1,5 +1,4 @@
 import styles from "./Debates.module.scss";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Debates = () => {
@@ -8,13 +7,13 @@ const Debates = () => {
   return (
 
     <div className={styles.vWrapper}>
+      <h1>Historique des débats</h1>
       {/* loop through all debates */}
       {Object.keys(debates).map((key) => {
         const debate = debates[key];
         return (
-          <Link to={`/debates/${key}`} key={key}>
-            <div className={styles.debateLocation}>{debate.location}</div>
-            <div className={styles.debateTime}>{debate.time}</div>
+          <Link to={`/debates/${key}`} key={key} className={styles.card}>
+            <p>{`${debate.location} • ${new Date(debate.time).toISOString().split("T")[0]}`}</p>
           </Link>
         );
       })}
