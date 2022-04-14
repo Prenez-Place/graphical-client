@@ -9,6 +9,7 @@ import {
 import styles from "./Recording.module.scss";
 import { playAudioMix } from "./audioMix";
 import recordIcon from "../../assets/voice-recording.svg";
+import searchIcon from "../../assets/search.svg";
 
 let stream: MediaStream | null = null;
 let debateRecorder: MediaRecorder | null = null;
@@ -19,6 +20,19 @@ enum RecordingStage {
   Recording = 2,
   RecordingFinished = 3,
 }
+
+const KeywordFilter = ({ filter, setFilter }: { filter: string, setFilter: any }) => {
+  return (
+    <div className={styles.kwCard}>
+      <input type="text" value={filter} placeholder={"Filtrer les mots clés"} onChange={e => {
+        setFilter(e.target.value);
+      }} />
+      <div className={styles.actionIcon}>
+        <img src={searchIcon} alt="search"/>
+      </div>
+    </div>
+  );
+};
 
 const KeywordLauncher = ({ keyword, onLaunch }: { keyword: string, onLaunch: () => void }) => {
   return (
@@ -32,11 +46,18 @@ const KeywordLauncher = ({ keyword, onLaunch }: { keyword: string, onLaunch: () 
 };
 
 const KeywordLaunchPad = ({ oneNewRequest }: { oneNewRequest: (kw: string) => void }) => {
-  const keywords = window.electron.store.get("keywords") || [];
+  const [filter, setFilter] = useState("")
+  const initialKeywords = window.electron.store.get("keywords") || [];
+  const filteredKeywords = (filter.trim().length > 0) ? (
+    initialKeywords.filter(kw => kw.includes(filter))
+  ) : (
+    initialKeywords
+  )
 
   return (
     <div className={styles.launchPad}>
-      {keywords.map((kw: string) => {
+      <KeywordFilter filter={filter} setFilter={setFilter}/>
+      {filteredKeywords.map((kw: string) => {
         return <KeywordLauncher keyword={kw} key={kw} onLaunch={() => {
           oneNewRequest(kw);
         }} />;
