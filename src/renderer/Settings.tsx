@@ -1,9 +1,11 @@
 import styles from './Settings.module.scss';
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
   const initialSettings = window.electron.store.get("settings") || { };
 
+  const navigate = useNavigate();
   const [rpcPath, setRpcPath] = useState(initialSettings.rpcPath || "");
   const [ethPrivateKey, setEthPrivateKey] = useState(initialSettings.ethPrivateKey || "");
   const [ipfsApiToken, setIpfsApiToken] = useState(initialSettings.ipfsApiToken || "");
@@ -19,7 +21,7 @@ const Settings = () => {
       debatesNftAddress,
       fragmentsNftAddress
     });
-    // todo notification
+    navigate("/");
   }
 
   return (
