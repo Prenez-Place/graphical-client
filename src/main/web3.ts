@@ -55,7 +55,8 @@ const pushMetadata = async (metadata: any)  => {
 };
 
 const mintNft = async (contractAddress: string, tokenUri: string) => {
-  const web3 = new Web3("https://polygon-rpc.com");
+  const rpcPath = store.get("settings.rpcPath") || "";
+  const web3 = new Web3(rpcPath);
   const debatesContract = new web3.eth.Contract(ERC721_ABI, contractAddress);
   const ethPrivateKey = store.get("settings.ethPrivateKey") || "";
   web3.eth.accounts.wallet.add(ethPrivateKey);
