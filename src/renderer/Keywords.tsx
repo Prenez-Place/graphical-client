@@ -1,12 +1,15 @@
 import styles from "./Keywords.module.scss";
 import { useState } from "react";
+import addIcon from "../../assets/add.svg";
+import removeIcon from "../../assets/minus.svg";
 
 const KeywordCard = ({ keyword, onRemove }: { keyword: string, onRemove: () => void }) => {
   return (
-    <div>
-      <h3>{keyword}</h3>
-      <span>link to fragments</span>
-      <button onClick={onRemove}>remove</button>
+    <div className={styles.kwCard}>
+      <p>{keyword}</p>
+      <div className={styles.actionIcon}>
+        <img src={removeIcon} alt="remove" onClick={onRemove} />
+      </div>
     </div>
   );
 };
@@ -20,20 +23,19 @@ const KeywordCreationCard = ({ onAdd }) => {
       onAdd(keyword);
       setKeyword("");
     }
-  }
+  };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input type="text" value={keyword} onChange={e => {
-            setKeyword(e.target.value);
-          }} />
-        </label>
-        <input type="submit" value="Submit" disabled={keyword.length < 1} />
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <div className={styles.newKwCard}>
+        <input type="text" value={keyword} placeholder={'Nouveau mot clé'} onChange={e => {
+          setKeyword(e.target.value);
+        }} />
+        <div className={styles.actionIcon}>
+          <img src={addIcon} alt="add" onClick={handleSubmit}/>
+        </div>
+      </div>
+    </form>
   );
 };
 
@@ -61,6 +63,9 @@ const Keywords = () => {
 
   return (
     <div className={styles.vWrapper}>
+      <h1 className={styles.title}>
+        Mots clés
+      </h1>
       {keywords.map((kw: string) => {
         return <KeywordCard keyword={kw} key={kw} onRemove={() => {
           removeKeyword(kw);
