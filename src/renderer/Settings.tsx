@@ -23,40 +23,41 @@ const Settings = () => {
   }
 
   return (
-    <div>
+    <div className={styles.vWrapper}>
       <h1>Paramètres</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          rpcPath:
+          rpcPath
           <input type="text" placeholder={"todo"} value={rpcPath} onChange={e => {
             setRpcPath(e.target.value);
           }} />
         </label>
         <label>
-          ⚠⚠ ethPrivateKey (as given by MM) (should be the NFT collections' owner) ⚠⚠:
+          {/* (as given by MM) (should be the NFT collections' owner) */}
+          ⚠⚠ ethPrivateKey ⚠⚠
           <input type="password" value={ethPrivateKey} onChange={e => {
             setEthPrivateKey(e.target.value);
           }} />
         </label>
         <label>
-          ipfsApiToken:
+          ipfsApiToken
           <input type="password" value={ipfsApiToken} onChange={e => {
             setIpfsApiToken(e.target.value);
           }} />
         </label>
         <label>
-          debatesNftAddress:
+          debatesNftAddress
           <input type="text" placeholder={"0xb7413449779e362becAb23319350d6ba39bC8040"} value={debatesNftAddress} onChange={e => {
             setDebatesNftAddress(e.target.value);
           }} />
         </label>
         <label>
-          fragmentsNftAddress:
+          fragmentsNftAddress
           <input type="text" placeholder={"0xb7413449779e362becAb23319350d6ba39bC8040"} value={fragmentsNftAddress} onChange={e => {
             setFragmentsNftAddress(e.target.value);
           }} />
         </label>
-        <input type="submit" value="Submit" disabled={false} />
+        <input type="submit" value="Submit" disabled={false} className={styles.submitButton}/>
       </form>
     </div>
   );

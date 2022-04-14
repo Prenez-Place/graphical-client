@@ -1,0 +1,42 @@
+.vWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  padding: 24px;
+
+  .title {
+    font-family: 'Bebas Neue', cursive;
+  }
+
+  label {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    min-width: 384px;
+    height: 64px;
+    border: solid black 4px;
+    border-radius: 8px;
+
+    padding: 0 24px;
+    font-size: 20px;
+
+    &:not(:last-child) {
+      margin-bottom: 24px;
+    }
+  }
+
+  .submitButton {
+    height: 48px;
+    background-color: white;
+    border: solid black 4px;
+    border-radius: 8px;
+    cursor: pointer;
+
+    font-size: 16px;
+  }
+
+}
