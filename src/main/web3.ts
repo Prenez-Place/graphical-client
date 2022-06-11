@@ -1,6 +1,7 @@
 import IpcMainInvokeEvent = Electron.IpcMainInvokeEvent;
 import fs from "fs";
 import Store from "electron-store";
+import Handlebars from "handlebars";
 import { getAssetPath } from "./main";
 import path from "path";
 const Web3 = require("web3");
@@ -41,8 +42,15 @@ async function fileFromPath(filePath) {
   return new File([content], path.basename(filePath), { type });
 }
 
-const createVisualization = async (lines: string[]) => {
-  return await fileFromPath(getAssetPath("tmp-nft-image.jpeg"));
+const createVisualization = async (templateFilePath: string, params: object) => {
+  const type = mime.getType(templateFilePath);
+  // create image from template
+  const templateContent = await fs.promises.readFile(templateFilePath);
+  const source = templateContent.toString();
+  const template = Handlebars.compile(source);
+  const result = template(params);
+  // return new file
+  return new File([Buffer.from(result, 'utf8')], "cover.svg", { type });
 };
 
 const pushMetadata = async (metadata: any)  => {
@@ -101,14 +109,18 @@ export namespace EthTxProcessor {
       }
       const tx = txQueue[0];
       // process the tx
-      let formattedDate, image, animation, metadata, tokenUri;
+      let formattedDate, formattedLocalDate, image, animation, metadata, tokenUri;
       console.log(`starting tx processing: ${tx.type}`);
       switch (tx.type) {
         case TxType.NewDebate:
           const debate = store.get(`debates.${tx.id}`);
           // load files
           formattedDate = new Date(debate.time).toISOString().split("T")[0];
-          image = await createVisualization([formattedDate, debate.location, "Prenez Place !"]);
+          formattedLocalDate = new Date(debate.time).toLocaleDateString('fr');
+          image = await createVisualization(
+            getAssetPath("nft-debate-template.svg"),
+            {date: formattedLocalDate, location: debate.location}
+          );
           animation = await fileFromPath(debate.recording);
           // create the metadata file
           metadata = {
@@ -146,7 +158,11 @@ export namespace EthTxProcessor {
           const fragment = store.get(`fragments.${tx.id}`);
           // create the metadata file
           formattedDate = new Date(fragment.time).toISOString()
-          image = await createVisualization([fragment.keyword, formattedDate, fragment.location, "Prenez Place !"]);
+          formattedLocalDate = new Date(fragment.time).toLocaleDateString('fr');
+          image = await createVisualization(
+            getAssetPath("nft-fragment-template.svg"),
+            {date: formattedLocalDate, location: fragment.location, keyword: fragment.keyword}
+          );
           animation = await fileFromPath(fragment.recording);
           metadata = {
             name: `Prenez Place ! • ${fragment.keyword} • ${fragment.location} • ${formattedDate}`,
